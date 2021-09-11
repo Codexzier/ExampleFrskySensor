@@ -1,3 +1,15 @@
+-- ========================================================================================
+--      Meine Welt in meinem Kopf
+-- ========================================================================================
+-- Projekt:       Sensor Daten über Smart Port versenden mit dem Arduino
+-- Author:        Johannes P. Langner
+-- Controller:    Arduino UNO / Mini
+-- Transceiver:   FrSky XLite Pro 
+-- Description:   Der Empfangene Sensor Wert wird in den entsprechenden Temperatur Wert
+--				  umgerechnet. Der Script kann am Ende über das Display eingebunden werden.
+-- Stand:         11.09.2021
+-- ========================================================================================
+
 -- Init function
 local function init_func()
 	-- init_func is called once when model is loaded
@@ -13,12 +25,10 @@ end
 local function run_func(event)
 	lcd.clear()
 	
-	local receivedValue = getValue('5900')
-	lcd.drawRectangle(10, 10, receivedValue, 5, SOLID)
-	
-	local toDecValue = receivedValue / 100.0
-	lcd.drawText(10, 20, string.format("%.2f", toDecValue), MIDSIZE)
-	
+	local receivedValue = getValue('TEMP')
+	local toDecValue = receivedValue * 0.0625;
+	lcd.drawText(10, 10, "Temperature", MIDSIZE)
+	lcd.drawText(10, 25, string.format("%.2f", toDecValue), MIDSIZE)
 	
 	return 0
 end
