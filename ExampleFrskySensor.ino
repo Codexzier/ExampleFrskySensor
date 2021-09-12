@@ -26,6 +26,7 @@ int mCurrentMillis;
 
 // ========================================================================================
 void setup() {
+  Serial.begin(115200);
   hub.registerSensor(sensor);             // Registriert den Sensor an den HUB.
   hub.begin();                           
 }
@@ -35,9 +36,14 @@ void loop() {
   hub.handle();                           // abruf neuer Daten
 
   int current = millis();
-  if(mCurrentMillis - current < 1000) {
+  if(current - mCurrentMillis < 100) {
+    Serial.print("Result: ");
+    Serial.println(current - mCurrentMillis, DEC);
+    Serial.print(mCurrentMillis, DEC);
+    Serial.println("ms");
      return;
   }
+  Serial.println(mSendingValue, DEC);
   mCurrentMillis = current;
   mSendingValue++;   
 }
